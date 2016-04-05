@@ -1,0 +1,58 @@
+IssueManager Standard version 3.0
+INSTALLATION GUIDE (.NET 2.0 version)
+----------------------------------------------------------------------------------
+
+REQUIREMENTS:
+
+- Windows 2000, XP Pro/Media Center (not Home), 2003
+- Microsoft Internet Information Services (IIS) web server v >= 5.x
+- .NET Framework v2.0
+- MDAC drivers for Access database version
+- SQL Server 2000 or later (also MSDE or SQL Server Express)
+- server administrative rights
+- possibility to create IIS Virtual Directories
+- possibility to grant NTFS permissions to web folders
+
+
+INSTALLATION STEPS:
+
+1. Extract archive contents to some directory under your web root directory.
+By default IIS web server uses C:\Inetpub\wwwroot directory, so create extract files
+to a folder like C:\Inetpub\wwwroot\IssueManager.
+
+2. Create IIS Virtual Directory for you new web application. Follow descriptions:
+http://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/5adfcce1-030d-45b8-997c-bdbfa08ea459.mspx
+
+You can right-click your application folder and choose Properties option. Choose Web Sharing tab and select Share this folder.
+
+3. Grant NTFS Write (or Modify) permissions on database and upload folders to your ASP.NET default identity.
+Update permissions to the following subfolders:
+
+App_Data
+uploads
+temp
+
+They require Modify permissions granted (allowed) for ASP.NET identity which is ASPNET user account by default
+(or NETWORK SERVICE in Windows 2003).
+
+To grant permissions right click your folder, choose Properties and select Security tab. Lookup account if not listed.
+
+4. Use SQL scripts from install folder to populate your SQL Server database. Optionally you may also populate sample records (available in separate file).
+
+5. Edit web.config file to provide database Connection String. It should look like:
+
+	<add key="IMString" value="Data Source=.\SQLEXPRESS;Initial Catalog=IM;User ID=web;Password=web;Persist Security Info=False"/>
+
+This means to connect database located at local host under SQLEXPRESS instance name. Database to connect is called IM and both user name and password is web.
+
+6. Navigate your application in your browser. If you've installed the application in C:\Inetpub\wwwroot\IssueManager
+then navigate http://localhost/IssueManager
+
+7. Log-in using default administrator account:
+
+username: admin
+password: admin
+
+8. Use Administration/System Configuration page to setup application defaults.
+
+9. Make sure to change administrator's account password.
